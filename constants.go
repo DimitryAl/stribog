@@ -1,4 +1,4 @@
-package hash
+package stribog
 
 // Кол-во байт
 const Length int = 64

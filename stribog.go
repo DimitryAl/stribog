@@ -1,4 +1,4 @@
-package hash
+package stribog
 
 func KeySchedule(K *[]byte, i int) {
 

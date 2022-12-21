@@ -1,4 +1,4 @@
-package hash
+package stribog
 
 // X-преобразование
 func AddXor512(seq1, seq2, res *[]byte) {
