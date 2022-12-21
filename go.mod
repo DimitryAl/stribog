@@ -1,3 +1,3 @@
-module github.com/DimitryAl/stribog.git
+module github.com/DimitryAl/stribog
 
 go 1.19
