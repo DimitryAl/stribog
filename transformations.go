@@ -11,10 +11,10 @@ func AddXor512(seq1, seq2, res *[]byte) {
 
 func AddModulo512(seq1, seq2, res *[]byte) {
 
-	var t int = 0
+	var t uint16 = 0
 
 	for i := 63; i >= 0; i-- {
-		t = int((*seq1)[i]+(*seq2)[i]) + (t >> 8)
+		t = uint16((*seq1)[i]+(*seq2)[i]) + (t >> 8)
 		(*res)[i] = (byte)(t & 0xFF)
 	}
 }
@@ -47,22 +47,27 @@ func L_transformation(seq *[]byte) {
 
 	var v uint64
 
+	temp := make([]byte, 64)
+	for i := 0; i < Length; i++ {
+		temp[i] = (*seq)[i]
+	}
+
 	for i := 0; i < 8; i++ {
 
 		v = 0
-		for k := 0; k < 8; k++ {
+		for j := 0; j < 8; j++ {
 
-			for j := 0; j < 8; j++ {
+			for k := 0; k < 8; k++ {
 
-				if ((*seq)[i*8+k] & (1 << (7 - j))) != 0 {
-					v ^= A[k*8+j]
+				if (temp[j*8+i] & 0x80 >> k) != 0 {
+					v ^= A[j*8+k]
 				}
 			}
 		}
 
-		for k := 0; k < 8; k++ {
+		for j := 0; j < 8; j++ {
 			// Возможно не надо приводить к byte
-			(*seq)[i*8+k] = byte((v & (uint64(0xFF) << (7 - k) * 8)) >> (7 - k) * 8)
+			(*seq)[i*8+j] = byte(v >> (7 - j) * 8)
 		}
 	}
 }
